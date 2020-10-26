@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div id="overviews" class="section wb">
+    <div class="container">
+        <div class="section-title row text-center">
+<form action="{% url 'examen_et_concours:searchExam' %}" method="GET" >
+        {% csrf_token %}
+        
+        <p><h3>Recherche de sujets des Examens</h3></p> 
+        <div class="form-row">
+            <div class="col">
+        <table style="width: 70%;" >
+          <tr>
+          <th>Examen</th>
+          <th>Niveau</th>
+          <th>Matière</th>
+          <th>Pays</th>
+          </tr>
+          <tr>
+            
+                <td>
+                    <select name="examen">
+                        {% for examen in examen %}
+                        {% if examen.category.name == 'Examen' %}
+                     <option  value ="{{examen.id}}" >{{examen.name}}</option>
+                     {% endif %}
+                    {% endfor %}
+                     
+                    </select>
+                    </td>
+                
+                    <td>
+                        <select name="Niveau">
+                            {% for level in level %}
+                         <option value="{{ level.id }}" >{{level.name}}</option>
+                        {% endfor %}
+                         
+                        </select>
+                        </td>
+           <td>
+           <select name="matter">
+               {% for matter in matter %}
+            <option value="{{ matter.id }}" >{{matter.name}}</option>
+            {% endfor %}
+           </select>
+           </td>
+          
+          
+           <td>
+               <select name="country">
+                   {% for country in country %}
+                   <option value="{{ country.id }}" selected>{{ country.name }}</option>
+               {% endfor %}
+               </select>
+           </td>
+          </tr>
+       <table>
+    </div>
+       <br>
+       <table>
+        <tr>
+        <Th>INTERVALE DE TEMPS</Th>
+        <th>Année</th>
+        </tr>
+         <TR>
+           <td><b>Début:</b></td>
+           <td>
+            <select name="year">
+                {% for year in year %}
+            <option value="{{ year.id }}" >{{year.year.year}}</option>
+          {% endfor %}
+           </select>
+          </td>
+          <TR>
+            <td><b>Fin:</b></td>
+            <td>
+             <select name="yearf">
+
+              {% for year in year %}
+            <option value="{{ year.id }}" >{{year.year.year}}</option>
+          {% endfor %}
+            </select>
+            
+           </td>
+          </TR>   
+        </table>
+       
+        <table style="width: 50%;">
+        <tr>
+        <td ><input type="submit" name="send" value="send"></td>
+        <td><input type="reset" name="Clean" value="Clean"></td>
+        </tr>
+        </table>
+      
+    </div>
+       </form>
+       
+       </div>
+       </div>
+       </div>
+       {% endblock %} 
+    

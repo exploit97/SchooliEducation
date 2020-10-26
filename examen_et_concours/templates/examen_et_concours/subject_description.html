@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if description %}
+<div>{{ description.title }}
+    <br>{{ description.level }}
+    <br>{{ description.Matter }}
+    <br>{{description.year }}
+    <br><a href="{{ description.subject_file.url }}" download>Telecharger</a>     ||  <strong> <a href="{{ sujets.solution.solution_file.url }}">Acheter le Corrigé</a></strong></div>
+   
+{% endif %}
+    {% endblock %}

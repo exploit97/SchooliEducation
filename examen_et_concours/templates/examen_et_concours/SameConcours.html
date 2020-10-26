@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- page SameConcours -->
+<h2 id="concours internationaux">Concours internationaux</h2>
+{% for concours in concours%}
+
+<img src="{{ concours.image.url }}" alt="eamac"/>
+    <p>{{ concours.name }}
+    <br>{{ concours.description|truncatewords:10 }}<a href="info_du_concours/items/{{concours.name}}"></a>lire la suite</a>
+<br><a href="{% url 'examen_et_concours:concours_subjects_form' concours.name %}">voir les sujets du concours</a></p>
+
+{% endfor %}
+{% endblock %}

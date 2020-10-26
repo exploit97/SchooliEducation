@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+       <!--blog categories list-->
+       <h1>blog categories</h1>
+       {% if categorie_list_view %}
+             {% for item in categorie_list_view %}
+             
+                 
+            <h4> <a  href="{% url 'blogs:same_categorie_list' item %}">
+						
+                {{ item }}
+            </a>  </h4>    
+     
+             {% endfor %}
+        
+        
+        {% else %} 
+
+<p>Aucun post, désolé!!!</p>
+        {% endif %}
+    
+     
+  
+      </div>
+      <div class="col-lg-3 col-md-5 col-sm-9 sidebar">
+        <div class="sb-widget-item">
+          <form class="search-widget">
+            <input type="text" placeholder="Chercher">
+            <button><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+        <div class="sb-widget-item">
+          <h4 class="sb-w-title">Salles de classe</h4>
+          <ul>
+            <li><a href="#">Programme</a></li>
+            <li><a href="#">Réseaux sociaux</a></li>
+            <li><a href="#">Nouvelles</a></li>
+            <li><a href="#">Événements</a></li>
+          </ul>
+        </div>
+        <div class="sb-widget-item">
+          <h4 class="sb-w-title">Archives</h4>
+          <ul>
+            <li><a href="#">February 2018</a></li>
+            <li><a href="#">March 2018</a></li>
+            <li><a href="#">April 2018</a></li>
+            <li><a href="#">May 2018</a></li>
+            <li><a href="#">June 2018</a></li>
+          </ul>
+        </div>
+        <div class="sb-widget-item">
+          <h4 class="sb-w-title">Hashtage</h4>
+          <div class="tags">
+            <a href="#">education</a>
+            <a href="#">courses</a>
+            <a href="#">development</a>
+            <a href="#">design</a>
+            <a href="#">on line courses</a>
+            <a href="#">wp</a>
+            <a href="#">html5</a>
+            <a href="#">music</a>
+          </div>
+        </div>
+        <div class="sb-widget-item">
+          <div class="add">
+            <a href="#"><img src="img/add.jpg" alt=""></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Page end -->
+
+{% endblock content %}

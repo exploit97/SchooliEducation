@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- page concours_subjects-->
+{{ title }}
+{% for sujets in touslessujets %} 
+
+<p><a href="{% url 'examen_et_concours:subject_description' sujets.id %}">{{ sujets.title }}</a></p>
+{% empty %}
+<p>Aucun sujet disponible</p>
+
+{% endfor %}
+
+
+
+
+
+{% endblock %}
