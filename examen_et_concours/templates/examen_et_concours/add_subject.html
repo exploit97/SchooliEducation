@@ -9,7 +9,7 @@
     {% if request.user.profile.is_teacher == True %}
         <h1>Ajouter un Sujet</h1>
         </div>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             
             {{ form.as_p }}
@@ -32,8 +32,12 @@
   <br><a href="{% url 'examen_et_concours:add_category' %}"><button class="site-btn" class="site-btn">Ajouter une categorie</button></a>
   <br><a href="{% url 'examen_et_concours:add_solution' %}"><button class="site-btn" class="site-btn">Ajouter une Solution</button></a>
   <br><a href="{% url 'examen_et_concours:add_year' %}"><button class="site-btn" class="site-btn">Ajouter une Année</button></a>
+ 
+  {% else %}
+ <p>Veuillez vous inscrire en tant que Enseignant pour ajouter un suject</p>
   {% endif %}
-  
+  {% else %}
+  <p>vous n'avez pas le droit d'ajouter un sujet</p>
 {% endif %}           
         
 {% endblock %}

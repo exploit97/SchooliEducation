@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- page concours_description -->
+
+
+<div id="overviews" class="section wb">
+    <div class="container">
+               
+        <hr class="invis"> 
+        <div class="row"> 
+         
+           
+       <h2>Description du concours {{ concours.name }}</h2>
+        <p> {{concours.description }}</p>
+        <a href="{% url 'examen_et_concours:touslesconcours'%}"> <button type="button" class="btn btn-primary">Revenir </button></a>
+        <a href="{% url 'examen_et_concours:concours_subjects_form' concours.name %}"><button type="button" class="btn btn-primary">Voir les sujets</button></a>
+    </div>
+    </div>
+</div>
+</div>
+<!-- end col -->
+
+            
+          
+            
+                                            </div><!-- end row -->
+                                          
+      </div><!-- end container -->
+  </div><!-- end section -->
+
+
+
+
+
+{% endblock %}
+

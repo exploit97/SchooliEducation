@@ -4,7 +4,7 @@ from blog.views import PostListView,PostDetailView,home, CreatePostView, delete_
 app_name = 'blogs'
 
 urlpatterns = [
-    path("",home.as_view(),name='home'),
+    path("",home,name='home'),
     path('blog/',PostListView.as_view(),name='post_list'),
     path('blog/<int:pk>/',PostDetailView.as_view(),name='post_detail'),
     path('blog/create/', CreatePostView.as_view(), name='create_post'),

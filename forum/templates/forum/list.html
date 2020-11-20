@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+<nav class="navbar navbar-expand navbar-light bg-light">
+   
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        {% if request.user.is_authenticated %}
+        {% if request.user.profile.is_teacher == True %}
+        <li class="nav-item">
+         
+            <a class="nav-link disabled" href="{% url 'forum:new-forum' %}">Nouveau forum</a>
+          </li>
+          {% endif %}
+          {% endif %}
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Nouveau sujet </a>
+        </li>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Fils d'actualité
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">les plus suivis</a>
+              <a class="dropdown-item" href="#">les plus aimés</a>
+              <a class="dropdown-item" href="#">les plus chauds</a>
+            </div>
+          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Postes
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">les plus vues</a>
+            <a class="dropdown-item" href="#">les plus aimés</a>
+            <a class="dropdown-item" href="#">les plus chauds</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+</div>
+</div>
+
+<div class="row">
+    <div class="col">
+<!-- Threads  -->
+<div class="jumbotron jumbotron-fluid" >
+    <div class="container" >
+      <h1 class="display-5">Rejoignez plus de 50,000+ étudiants à travers le monde et partagez toutes vos questions et solutions.</h1>
+      <p class="lead">Le forum de SchooliEducation vous permet de vous perfectionner dans votre domaine d'étude scolaire. vous y verrez des milliers de questions et réponses que 
+          vous vous posez et que vous cherchez respectivement.</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row">
+    <div class="col">
+
+<div class="text-center">
+<form>
+    <input type="search" name="search" placeholder="rechercher">
+    <input type="submit">
+</form>
+</div>
+
+
+<ul class="nav justify-content-end">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'forum:question-topic' %}"><button class="btn btn-danger"> Poser une question</button> </a> 
+    </li>
+    
+    <li class="nav-item">
+       <a class="nav-link" href="{% url 'forum:question-topic' %}"><button class="btn btn-danger">Nouveau sujet</button></a> 
+    </li>
+    
+   
+  </ul>
+  <h2 >Forum d'assistance</h2>
+   
+
+<hr>
+<!-- Forums  -->
+<div id="list" style="background-color: beige;">
+
+    <table border="0" cellpadding="4" width="100%">
+        <tr>
+            <td><strong>DES FORUMS</strong> </td>
+            <td><strong>POSTS</strong></td>
+            <td> <strong>DERNIERS POSTS</strong></td>
+            <td></td>
+            
+        </tr>
+      
+        {% for forum in forums %}
+            <tr>
+                <td {% if forloop.last %} class="last" {% endif %}>
+                    <div class="title"> <a href="{% url 'forum:forum-detail' forum.pk %}">{{ forum.title }}</a></div>
+                </td>
+                <td {% if forloop.last %}class="last"{% endif %}>{{ forum.num_posts }}</td>
+                <td {% if forloop.last %}class="last"{% endif %}>
+                    {{ forum.last_post.short|linebreaksbr }}</td>
+                <td {% if forloop.last %}class="last"{% endif %}>
+                    <a class="button" href="{% url 'forum:forum-detail' forum.pk %}">VIEW</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

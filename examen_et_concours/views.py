@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Concours, Category, Solution, Subject,Level,Matter,Country,Year
+from .models import Concours, Category, Solution, Subject,Level,Matter,Country,Year,Etablissement
 from django.views.generic import ListView, UpdateView, DetailView, CreateView, TemplateView
 from django.urls import reverse_lazy,reverse
 from .forms import addConcoursForm,addCountryForm,addEtablissementForm,addLevelForm,addSolutionForm,addYearForm,addMatterForm,addCategoryForm
-
+from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 
 # Create your views here.
 
@@ -13,8 +13,13 @@ def home(request):
 
 class TousLesConcours(ListView):
     template_name='examen_et_concours/touslesconcours.html'
-    context_object_name='touslesconcours'
     model = Concours
+    paginate_by = 6
+
+class ConcoursDescription(DetailView):
+    template_name='examen_et_concours/concours_description.html'
+    model = Concours
+ 
 
 def SameConcours(request, cats):                     
     cats = get_object_or_404(Category, name = cats)
@@ -32,7 +37,9 @@ def examenSearchForm(request):
     context = {'level':level,
     'matter':matter,
     'year':year,
-    'country':country,'examen':examen, }
+    'country':country,
+    'examen':examen, 
+    }
     return render(request,'examen_et_concours/examen_search_form.html',context) 
 
 def concoursSubjectForm(request,name):
@@ -69,12 +76,8 @@ def searchExam(request):
     yearf = request.GET.get("yearf")  
    
   
-    sujet = Subject.objects.filter(examen=examen).filter(
-        level = Niveau).filter(
-            matter = matter
-        ).filter(
-            country=country
-        ).filter(year__gte = year).filter(
+    sujet = Subject.objects.filter(examen=examen,level = Niveau,matter = matter,country=country
+    ).filter(year__gte = year).filter(
             year__lte = yearf)
         
     
@@ -123,14 +126,25 @@ def searchConcours(request):
     query = request.GET.get('query')
     if not query :
         concours = Concours.objects.all()
+        
     else:
         # title contains the query is and query is not sensitive to case.
         concours = Concours.objects.filter(name__icontains=query)
     
+    paginator = Paginator(concours, 6)
+    page = request.GET.get('page')
+    try:
+        concours = paginator.page(page)
+    except PageNotAnInteger:
+        concours = paginator.page(1)
+    except EmptyPage:
+        concours = paginator.page(paginator.num_pages)
+    
     title = "Resultats pour la réquête %s"%query
     context = {
-        'touslesconcours': concours,
+        'concours_search': concours,
         'title': title,
+        'paginate': True
     }
     return render(request, 'examen_et_concours/search_concours.html', context)
 
@@ -140,7 +154,7 @@ class AddSubjectView(CreateView):
     template_name = 'examen_et_concours/add_subject.html'
     #form_class = AddsubjectForm
     fields = '__all__'
-    success_url = reverse_lazy('examen_et_concours:add_subject')
+    success_url = reverse_lazy('examen_et_concours:touslesconcours')
      
 class addConcours(CreateView):
     model = Concours
@@ -186,8 +200,8 @@ class addSolution(CreateView):
 
 
 class addEtablissement(CreateView):
-    model = Solution
-    form_class=addSolutionForm
+    model = Etablissement
+    form_class=addEtablissementForm
     template_name = 'examen_et_concours/add.html'
     success_url = reverse_lazy('examen_et_concours:add_subject')
     

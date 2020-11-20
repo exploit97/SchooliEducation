@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
+from PIL import Image
 
 # Create your models here.
 
@@ -18,7 +19,7 @@ class Post(models.Model):
     title = models.CharField(max_length=30)
     #text = models.TextField()
     text = RichTextField(blank=True, null=True)
-    post_image = models.ImageField(blank=True, null=True, upload_to='image/')
+    post_image = models.ImageField(blank=True, null=True, upload_to='image/',default='media/blog.jpg')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now= True)
     categorie =models.ForeignKey(Categorie, on_delete = models.CASCADE, null=True, blank = True)

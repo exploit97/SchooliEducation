@@ -1,7 +1,16 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load account socialaccount %}
 {% block content %}
-<div id="carouselExampleControls" class="carousel slide bs-slider box-slider" data-ride="carousel" data-pause="hover" data-interval="false" >
+
+
+<div id="overviews" class="section wb">
+    <div class="container">
+        <div class="row"> 
+            <div class="col-lg-9">
+<div id="carouselExampleControls" class="carousel slide bs-slider box-slider" data-ride="carousel" style="height: 18%;">
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
@@ -9,13 +18,47 @@
         <li data-target="#carouselExampleControls" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
-        <div class="carousel-item active">
-            <div id="home" class="first-section" style="background-image:url({% static 'schooli/images/slider-01.jpg' %});">
+
+        
+        {% for post in posts %}
+        {% if post %}
+        <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+           
+            <div id="home" class="first-section" style="background-image:url({% static 'schooli/images/slide-1.jpg' %});">
+              
                 <div class="dtab">
                     <div class="container">
                         <div class="row">
+                            <div class="col-md-12 col-sm-12 text-center">
+                                <div class="big-tagline">
+                                   
+                                    <h2>{{ post.title }}</h2>
+                                    <p class="lead">{{post.snippet|truncatewords:100}} </p>
+                                        <a href="#" class="hover-btn-new"><span>Nous contacter</span></a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#" class="hover-btn-new"><span>plus d'info</span></a>
+                                </div>
+                            </div>
+                        </div><!-- end row -->            
+                    </div><!-- end container -->
+                </div>
+            </div><!-- end section -->
+        </div>
+{% else %}
+
+
+
+
+        <div class="carousel-item active">
+            <div id="home" class="first-section" style="background-image:url({% static 'schooli/images/slide-1.jpg' %});">
+                <div class="dtab">
+                    <div class="container">
+                        <div class="row">
+                         
+
                             <div class="col-md-12 col-sm-12 text-right">
                                 <div class="big-tagline">
+                                   
                                     <h2><strong>Schooli </strong> Au coeur de l'éducation</h2>
                                     <p class="lead">Nous disposons d'une gamme des épreuves corrigeés des examens et concours. </p>
                                         <a href="#" class="hover-btn-new"><span>Contact Us</span></a>
@@ -29,13 +72,13 @@
             </div><!-- end section -->
         </div>
         <div class="carousel-item">
-            <div id="home" class="first-section" style="background-image:url({% static 'schooli/images/slider-02.jpg' %});">
+            <div id="home" class="first-section" style="background-image:url({% static 'schooli/images/slide-2.jpg' %});">
                 <div class="dtab">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 text-left">
                                 <div class="big-tagline">
-                                    <h2 data-animation="animated zoomInRight">Schooli <strong>Plateforme d'éeducation</strong></h2>
+                                    <h2 data-animation="animated zoomInRight">Schooli <strong>Plateforme d'éducation</strong></h2>
                                     <p class="lead" data-animation="animated fadeInLeft">Nous disposons d'une gamme des épreuves corrigeés des examens et concours.. </p>
                                         <a href="#" class="hover-btn-new"><span>Contact Us</span></a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -48,7 +91,7 @@
             </div><!-- end section -->
         </div>
         <div class="carousel-item">
-            <div id="home" class="first-section" style="background-image:url({% static 'schooli/images/slider-03.jpg' %});">
+            <div id="home" class="first-section" style="background-image:url({% static 'schooli/images/slide-3.jpg' %}); ">
                 <div class="dtab">
                     <div class="container">
                         <div class="row">
@@ -66,6 +109,8 @@
                 </div>
             </div><!-- end section -->
         </div>
+        {% endif %}
+{% endfor %}
         <!-- Left Control -->
         <a class="new-effect carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span class="fa fa-angle-left" aria-hidden="true"></span>
@@ -79,11 +124,12 @@
         </a>
     </div>
 </div>
+
 <div id="overviews" class="section wb">
     <div class="container" id="about">
         <div class="section-title row text-center">
             <div class="col-md-8 offset-md-2">
-                <h3>About</h3>
+                <h3>Qui sommes nous</h3>
                 <p class="lead"> Nous sommes une plateforme de préparation d'examen et concours, Nous accompagnons et orientons les élèves et étudiants tout au long de leur cursus accadémique. Notre siège social se trouve  à Brazzaville, République du Congo.</p>
             </div>
         </div><!-- end title -->
@@ -103,14 +149,14 @@
             
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="post-media wow fadeIn">
-                    <img src="{% static 'schooli/images/about_02.jpg' %}" alt="" class="img-fluid img-rounded">
+                    <img src="{% static 'schooli/images/about-1.jpg' %}" alt="" class="img-fluid img-rounded">
                 </div><!-- end media -->
             </div><!-- end col -->
         </div>
         <div class="row align-items-center">
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="post-media wow fadeIn">
-                    <img src="{% static 'schooli/images/about_03.jpg' %}" alt="" class="img-fluid img-rounded">
+                    <img src="{% static 'schooli/images/about-2.jpg' %}" alt="" class="img-fluid img-rounded">
                 </div><!-- end media -->
             </div><!-- end col -->
             
@@ -153,31 +199,127 @@
     </div>
 </section>
 
-<div class="section cl">
-    <div class="container">
-        <div class="row text-left stat-wrap">
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <span data-scroll class="global-radius icon_wrap effect-1 alignleft"><i class="flaticon-study"></i></span>
-                <p class="stat_count">12000</p>
-                <h3>Students</h3>
-            </div><!-- end col -->
 
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <span data-scroll class="global-radius icon_wrap effect-1 alignleft"><i class="flaticon-online"></i></span>
-                <p class="stat_count">240</p>
-                <h3>Courses</h3>
-            </div><!-- end col -->
+         
+                 
 
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <span data-scroll class="global-radius icon_wrap effect-1 alignleft"><i class="flaticon-years"></i></span>
-                <p class="stat_count">55</p>
-                <h3>Years Completed</h3>
-            </div><!-- end col -->
+
+
+</div>
+
+       
+          
+            <div class="col-lg-3 col-12 right-single">
+                <div class="widget-search">
+                    <div class="site-search-area">
+                        <form method="get" id="site-searchform" action="#">
+                            <div>
+                                <input class="input-text form-control" name="search-k" id="search-k" placeholder="Search keywords..." type="text">
+                                <input id="searchsubmit" value="Search" type="submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="widget-categories">
+                    <h3 class="widget-title">Les Nouvelles</h3>
+                    <ul>
+                        {% for post in posts %}
+                        {% if post %}
+                        <li><a href="#">{{post.title}}</a></li>
+                        {% else %}
+                        <li>Aucun post disponible</li>
+                        {% endif %}
+                       
+                   {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="widget-categories">
+                    <h3 class="widget-title">Categories</h3>
+                    <ul>
+                        {% for categorie in categories %}
+                        {% if categorie %}
+                        <li><a href="#">{{categorie.name}}</a></li>
+                        {% else %}
+                        <li>Aucune catégorie disponible</li>
+                        {% endif %}
+                       
+                   {% endfor %}
+                    </ul>
+                </div>
+                <div class="widget-tags">
+                    <h3 class="widget-title">Nos Forums</h3>
+                    <h4 class="text-center">Posez vos questions sur nos forums</h4>
+                    {% for forum in forums %}
+                    <ul class="tags">
+                    {% if forum %}
+                    
+
+                    <li><a href="{% url 'forum:forum-detail' forum.id %}">{{forum.title}}</a></li>
+                    {% else %}
+                    <li>Aucun forum disponible</li>
+                    {% endif %}
+                   
+               {% endfor %}
+                    </ul>
+                </div>
+
+<div >
+                <section id="login" class="bg-light py-5">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12 mx-auto">
+                          <div class="card">
+                            <div class="card-header bg-primary text-white">
+                              <h4>
+                                <i class="fas fa-sign-in-alt"></i> Login</h4>
+                            </div>
+                            <div class="card-body">
+                             
+                              <form action="{% url 'account_login'  %}" method="POST"  >
+                                  {% csrf_token  %}
+                                <div class="form-group">
+                                  <label for="username">Username</label>
+                                  <input type="text" name="username" class="form-control" required>
+                                </div>
+                
+                                <div class="form-group">
+                                  <label for="password2">Password</label>
+                                  <input type="password" name="password" class="form-control" required>
+                                  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Mot de passe oublié?" %}</a>
+                                </div>
+                
+                                <input type="submit" value="Login" class="btn btn-secondary btn-block">
+                              </form>
+                              <p>{% blocktrans %}Pas encore créé de compte, veuillez
+                                <a href="{{ signup_url }}">S'inscrire ici</a>{% endblocktrans %}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+            </div>
+
+            <div class="widget-tags">
+                <h3 class="widget-title">Sujets corrigés</h3>
+                
+                
+                <ul class="tags">
+             
+                
+                <li><a href="{% url 'forum:forum-index' %}">Licence</a></li>
+                <li><a href="{% url 'forum:forum-index'  %}">BTS</a></li>
+                <li><a href="{% url 'forum:forum-index'  %}">Baccalauréat</a></li>
+                <li><a href="{% url 'forum:forum-index'  %}">BEPEC</a></li>
+                
+                
+                </ul>
+            </div>
+
+                
+            </div>
         </div><!-- end row -->
     </div><!-- end container -->
 </div><!-- end section -->
-
-
-                 
-
 {% endblock %}

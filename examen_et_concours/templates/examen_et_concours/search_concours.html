@@ -1,7 +1,107 @@
 
 
 
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- page touslesconcours -->
 
+<div id="overviews" class="section wb">
+  <div class="container">
+      <div class="row"> 
+          <div class="col-lg-9">
+<div id="overviews">
+    <div class="container">
+        <div class="section-title row text-center">
+            <div class="col-md-8 offset-md-2">
+               
+                <h1><strong> {{title}}.</strong>
+                   </h1>
+                 
+                 
+            </div>
+     
+               
+        </div>
+    
+        <hr class="invis"> 
+        <div class="row"> 
+         
+            {% for concours in concours_search %}
+            {% if concours.category.name == 'Concours' %}
+          
+            <div class="card mb-3">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="{{concours.image.url }}" class="card-img" alt="..." width="75px" height="100px">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{% url 'examen_et_concours:concours_subjects_form' concours.name %}" title="">{{concours.name}}</a></h5>
+                  <p class="card-text"> {{concours.description|truncatewords:50 }}</p>
+                  <a href="{% url 'examen_et_concours:concours_description' concours.id %}"> <button type="button" class="btn btn-primary">la suite </button></a>
+                  <a href="{% url 'examen_et_concours:concours_subjects_form' concours.name %}"><button type="button" class="btn btn-primary">Voir les sujets</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+            <!-- end col -->
+            {% endif %}
+            {% endfor %}
+            
+          
+            
+                                            </div><!-- end row -->
+                                            {% if paginate %}
+                                            <div class="clearfix"></div>
+                                            <nav aria-label="">
+                                              <ul class="pager">
+                                                {% if concours_search.has_previous %}
+                                                    <li><a href="?page={{ concours_search.previous_page_number }}">Précédent</a></li>
+                                                {% endif %}
+                                                {% if concours_search.has_next %}
+                                                    <li><a href="?page={{ concours_search.next_page_number }}">Suivant</a></li>
+                                                {% endif %}
+                                              </ul>
+                                            </nav>
+                                            {% endif %}
+      </div><!-- end container -->
+  </div><!-- end section -->
+          </div><!-- end col -->
 
-{% include 'examen_et_concours/touslesconcours.html' %}
+  <div class="col-lg-3 col-12 right-single">
+
+    <div class="widget-categories">
+        <h3 class="widget-title">Categories</h3>
+        <ul>
+            {% for categorie in categories %}
+            {% if categorie %}
+            <li><a href="#">{{categorie.name}}</a></li>
+            {% else %}
+            <li>Aucune catégorie disponible</li>
+            {% endif %}
+           
+       {% endfor %}
+        </ul>
+    </div>
+    <div class="widget-tags">
+        <h3 class="widget-title">Nos Forums</h3>
+        {% for forum in forums %}
+        <ul class="tags">
+        {% if forum %}
+        
+
+        <li><a href="{% url 'forum:forum-detail' forum.id %}">{{forum.title}}</a></li>
+        {% else %}
+        <li>Aucun forum disponible</li>
+        {% endif %}
+       
+   {% endfor %}
+        </ul>
+    </div>
+</div><!-- end col -->
+</div><!-- end row -->
+</div><!-- end container -->
+</div><!-- end section -->
+{% endblock %}
 

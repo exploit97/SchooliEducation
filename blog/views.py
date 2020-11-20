@@ -8,11 +8,20 @@ from django.views.generic import (TemplateView,ListView,DetailView,CreateView,Up
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from users.models import Profile
+from forum.models import Forum
 
 # Create your views here.
 
-class home(TemplateView):
-    template_name = 'home.html'
+    
+    
+def home(request):
+    categories = Categorie.objects.all()[:6]
+    forums = Forum.objects.all()[:6]
+    posts = Post.objects.all()[:3]
+    context = {'categories':categories,
+                'forums':forums,
+                'posts':posts }
+    return render(request,'home.html',context)
     
 class PostListView(ListView):
     model = Post

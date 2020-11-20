@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'examen_et_concours',
     'courses',
+    'forum.apps.ForumConfig',
+    'librairie.apps.LibrairieConfig',
     'allauth.account',
     'allauth.socialaccount',
     'memberships.apps.MembershipsConfig',

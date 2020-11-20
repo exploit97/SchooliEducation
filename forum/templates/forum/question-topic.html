@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div style="background-color: beige;">
+<form action="{% url 'forum:question-topic' %}" method="POST">
+    {% csrf_token %} 
+    {{ form|crispy }}
+    <input type="submit" value="Submit" />
+</form>
+</div>
+{% endblock %}

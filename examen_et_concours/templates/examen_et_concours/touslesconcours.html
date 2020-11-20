@@ -3,17 +3,25 @@
 {% block content %}
 <!-- page touslesconcours -->
 
-
 <div id="overviews" class="section wb">
+  <div class="container">
+      <div class="row"> 
+          <div class="col-lg-9">
+<div id="overviews">
     <div class="container">
         <div class="section-title row text-center">
             <div class="col-md-8 offset-md-2">
-                <p class="lead">Liste de tous les concours<span class="m_1">Avec sujets corrigés des épreuves.</span></p>
-                  <br>  {% include 'examen_et_concours/concours_search_form.html' %}
-               
+                <h1><strong> Listes de tous les concours.</strong>
+                  <br>Avec sujets corrigés des épreuves. </h1>
+                 
             </div>
-            
-      
+           
+            {% include 'examen_et_concours/concours_search_form.html' %}
+               
+        
+           
+               
+        </div>
     
         
 
@@ -22,19 +30,20 @@
 
         <hr class="invis"> 
         <div class="row"> 
-            {% for concours in touslesconcours %}
+         
+            {% for concours in page_obj %}
             {% if concours.category.name == 'Concours' %}
-
-            <div class="card mb-3" style="max-width: 540px;">
+          
+            <div class="card mb-3">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <img src="{% static 'schooli/images/blog_1.jpg' %}" class="card-img" alt="...">
+                <img src="{{concours.image.url }}" class="card-img" alt="..." width="75px" height="100px">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
                   <h5 class="card-title"><a href="{% url 'examen_et_concours:concours_subjects_form' concours.name %}" title="">{{concours.name}}</a></h5>
-                  <p class="card-text"><p> {{concours.description|truncatewords:100 }}</p>
-                  <a href="{{concours.description }}"> <button type="button" class="btn btn-primary">la suite </button></a>
+                  <p class="card-text"> {{concours.description|truncatewords:50 }}</p>
+                  <a href="{% url 'examen_et_concours:concours_description' concours.id %}"> <button type="button" class="btn btn-primary">la suite </button></a>
                   <a href="{% url 'examen_et_concours:concours_subjects_form' concours.name %}"><button type="button" class="btn btn-primary">Voir les sujets</button></a>
                 </div>
               </div>
@@ -43,15 +52,59 @@
             <!-- end col -->
             {% endif %}
             {% endfor %}
-
-          </div><!-- end title -->
+            
+          
+            
                                             </div><!-- end row -->
-                                        </div><!-- end container -->
-                                    </div><!-- end section -->
+                                            <div class="pagination">
+                                              <span class="step-links">
+                                              {% if page_obj.has_previous %}
+                                              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                                              {% endif %}
+                                              <span class="current">
+                                              Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+                                              </span>
+                                              {% if page_obj.has_next %}
+                                              <a href="?page={{ page_obj.next_page_number }}">next</a>
+                                              {% endif %}
+                                              </span>
+                                              </div>
+      </div><!-- end container -->
+  </div><!-- end section -->
+          </div><!-- end col -->
 
+  <div class="col-lg-3 col-12 right-single">
 
+    <div class="widget-categories">
+        <h3 class="widget-title">Categories</h3>
+        <ul>
+            {% for categorie in categories %}
+            {% if categorie %}
+            <li><a href="#">{{categorie.name}}</a></li>
+            {% else %}
+            <li>Aucune catégorie disponible</li>
+            {% endif %}
+           
+       {% endfor %}
+        </ul>
+    </div>
+    <div class="widget-tags">
+        <h3 class="widget-title">Nos Forums</h3>
+        {% for forum in forums %}
+        <ul class="tags">
+        {% if forum %}
+        
 
-
-
+        <li><a href="{% url 'forum:forum-detail' forum.id %}">{{forum.title}}</a></li>
+        {% else %}
+        <li>Aucun forum disponible</li>
+        {% endif %}
+       
+   {% endfor %}
+        </ul>
+    </div>
+</div><!-- end col -->
+</div><!-- end row -->
+</div><!-- end container -->
+</div><!-- end section -->
 {% endblock %}
-

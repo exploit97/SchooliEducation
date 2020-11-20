@@ -54,21 +54,123 @@
 	</div>
 	<!-- END LOADER -->	
 	
+
+		
+				
+						
+			
+			
+				
+			<!--
+				
+				{% if request.user.is_authenticated %}
+			
+				  <a class=" dropdown-toggle nav-link " href="#" role="button" id="dropdown-a" data-toggle="dropdown" >
+					  {{request.user.username}}
+				  </a>
+				
+				  <div class="dropdown-menu" aria-labelledby="dropdown-a">
+					<a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a>
+					<a class="dropdown-item" href="{% url 'account_logout' %}">Sortie</a>
+				  </div>
+		
+				{% else %}
+				
+				  <a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_login' %}">Connexion</a>
+				
+			
+				  <a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_signup' %}">Inscription</a>
+				
+				{% endif %}</div>
+		
+		-->	
+	</div>
+	
+		
+	
+
+		
+			
 	<!-- Start header -->
 	<header class="top-navbar">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		
 			<div class="container-fluid">
+
+				<div class="row">
+					<div class="col">
+						<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<a class="navbar-brand" href="">
-				<!-- 	<img src="{% static 'schooli/images/logo.png' %}" alt="" />-->
+				<img src="{% static 'schooli/images/logo-schooli.png' %}" alt="" />
 				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-host" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbars-host">
+				
+				
+				<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown">
+					{% if request.user.is_authenticated %}
+				  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{{request.user.username}}
+				  </a>
+				  <div class="dropdown-menu" aria-labelledby="dropdown-a">
+					<a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a>
+					<a class="dropdown-item" href="{% url 'account_logout' %}">Sortie</a>
+				  </div>
+				
+				</li>
+				{% else %}
+			<!--	<li class="nav-item ">
+					<a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_login' %}">Connexion</a>
+				  </li>
+				 
+				
+				
+				
+				  <li class="nav-item ">
+				  <a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_signup' %}">Inscription</a>
+				  </li>
+				-->
+
+				
+                    
+                        <li class="nav-item  dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" id="dropdown-a"><span class="fa fa-user margin-r-5"></span> Mon compte </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                                                           
+                                    <a class="dropdown-item" href="{% url 'account_login' %}" >
+                                        <span class="fa fa-user icon-min-width-20"></span>Se connecter
+                                    </a>
+                                
+                                
+                                    <a  class="dropdown-item" href="{% url 'account_signup' %}">
+                                        <span class="fa fa-user-plus icon-min-width-20"></span>Créer un compte
+                                    </a>
+                                  
+                                
+								</div>
+                                                          
+                    </li>
+
+				  {% endif %}
+			  </ul>
+					
+			</li>
+			
+			  
+			</nav>
+			</div>
+				</div>
+				
+			<div class="row">
+				<div class="col">
+					<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-host" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbars-host">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active"><a class="nav-link" href="">Acceuil</a></li>
+						<li class="nav-item active"><a class="nav-link" href="{% url 'blogs:home' %}">Acceuil</a></li>
 				
 					{% if request.user.profile.is_teacher == True %}
 						<li class="nav-item mx-0 mx-lg-1">
@@ -93,55 +195,47 @@
 								<a class="dropdown-item" href="{% url 'courses:home' %}">Cours et TD</a>
 							</div>
 						</li>
-						<li class="nav-item dropdown">
+					<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Orienation</a>
 							<div class="dropdown-menu" aria-labelledby="dropdown-a">
 								<a class="dropdown-item" href="blog.html"> Apres le Baccaleauréat</a>
 								<a class="dropdown-item" href="blog-single.html">Après la licence </a>
 							</div>
-						</li>
+						</li>	
 						<li class="nav-item"><a class="nav-link" href="blog/categorie/concours">Bourses d'études</a></li>
-						<li class="nav-item"><a class="nav-link" href="pricing.html">Librarie</a></li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Contact</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown-a">
-								<a class="dropdown-item" href="#about">Qui sommes nous</a>
-								<a class="dropdown-item" href="#history">Contact</a>
-							</div>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'forum:forum-index' %}">Forum</a>
+							
 						</li>
-						{% endif %}
-						{% if request.user.is_authenticated %}
-						<li class="nav-item dropdown">
-						  <a class=" dropdown-toggle nav-link " href="#" role="button" id="dropdown-a" data-toggle="dropdown" >
-							  {{request.user.username}}
-						  </a>
+						<li class="nav-item"><a class="nav-link" href="{% url 'store:index' %}">Librarie</a></li> 	
 						
-						  <div class="dropdown-menu" aria-labelledby="dropdown-a">
-							<a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a>
-							<a class="dropdown-item" href="{% url 'account_logout' %}">Sortie</a>
-						  </div>
-						</li>
-						{% else %}
-						<li class="nav-item mx-0 mx-lg-1">
-						  <a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_login' %}">Connexion</a>
-						</li>
-						<li class="nav-item mx-0 mx-lg-1">
-						  <a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_signup' %}">Inscription</a>
-						</li>
 						{% endif %}
+						
 					  </ul>
-						
+				</div>
+			</nav>
+				</div>	
                    
 				</div>
 			</div>
-		</nav>
+		
+	
 	</header>
+
 	<!-- End header -->
+		
+
+	
+		
 	
     {% block content %}
     
     {% endblock %}
-	
+		
+		
+		
+		
+			
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -205,7 +299,10 @@
                 </div>
             </div>
         </div><!-- end container -->
-    </div><!-- end copyrights -->
+	</div><!-- end copyrights -->
+
+
+
 
     <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
 
@@ -222,5 +319,6 @@
 			visibleItems: 4
 		});
 	</script>
+			
 </body>
 </html>

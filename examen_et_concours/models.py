@@ -61,7 +61,7 @@ class Concours(models.Model):
 
         img = Image.open(self.image.path)
         if img.height >100 or img.width>100:
-            output_size = (200,200)
+            output_size = (100,100)
             img.thumbnail(output_size)
             img.save(self.image.path)
 

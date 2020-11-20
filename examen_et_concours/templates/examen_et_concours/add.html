@@ -7,7 +7,7 @@
 <div id="overviews" class="section wb">
     <div class="container">
         <div class="section-title row text-center">
-<form method="POST" >
+<form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p }}
 

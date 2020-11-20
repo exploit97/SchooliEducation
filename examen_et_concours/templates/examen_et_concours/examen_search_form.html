@@ -9,7 +9,7 @@
 <form action="{% url 'examen_et_concours:searchExam' %}" method="GET" >
         {% csrf_token %}
         
-        <p><h3>Recherche de sujets des Examens</h3></p> 
+        <h3>Recherche de sujets des Examens</h3> 
         <div class="form-row">
             <div class="col">
         <table style="width: 70%;" >
@@ -98,6 +98,13 @@
     </div>
        </form>
        
+       </div>
+       <div class="row">
+         <div class="col">
+           <p>Notice : Vous pouvez cherchez les sujets des examens d'états tels que le Baccalauréat(général et technique) pour toutes les séries.
+             du BEPEC et aussi des sujets des classes de passage. veuillez donc à bien remplir le formulaire selon vos choix.
+           </p>
+         </div>
        </div>
        </div>
        </div>

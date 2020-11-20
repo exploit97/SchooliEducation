@@ -1,10 +1,11 @@
 from django.urls import path, include
-from  examen_et_concours.views import home,TousLesConcours,addCategory,addConcours, addSolution,addMatter,addLevel,addYear,addCountry,addEtablissement, examenSearchForm, searchConcoursSujects, searchExam,concoursSubjectForm, searchConcours,ConcoursSubjectDescription,SameConcours,AddSubjectView
+from  examen_et_concours.views import home,TousLesConcours,ConcoursDescription,addCategory,addConcours, addSolution,addMatter,addLevel,addYear,addCountry,addEtablissement, examenSearchForm, searchConcoursSujects, searchExam,concoursSubjectForm, searchConcours,ConcoursSubjectDescription,SameConcours,AddSubjectView
 
 app_name = 'examen_et_concours'
 urlpatterns = [
     path('', home,name='home'),
     path('concours/liste', TousLesConcours.as_view(),name='touslesconcours'),
+    path('concours/description/<int:pk>/', ConcoursDescription.as_view(),name='concours_description'),
     path('concours/liste/<str:cats>', SameConcours,name='SameConcours'),
     path('examens/sujets/search', examenSearchForm,name='Searchform'),
     path('concours/sujets/<str:name>', concoursSubjectForm,name='concours_subjects_form'),

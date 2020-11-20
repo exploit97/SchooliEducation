@@ -14,6 +14,8 @@ urlpatterns = [
     path('',include('users.urls', namespace='users')),
     path('courses/',include('courses.urls', namespace='courses')),
     path('examen_et_concours/',include('examen_et_concours.urls', namespace='examen_et_concours')),
+    path('librairie/',include('librairie.urls', namespace='store')),
+    path('forum/',include('forum.urls', namespace='forum')),
     
 ]
 
