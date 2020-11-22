@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Concours, Category, Solution, Subject,Matter,Level,Country,Etablissement,Year
+from .models import Evaluation, Category, Solution, Subject,Matter,Level,Country,Etablissement,Year,SubCategory
 
 # Register your models here.
 
@@ -7,8 +7,9 @@ from .models import Concours, Category, Solution, Subject,Matter,Level,Country,E
 
 
 admin.site.register(Subject)
-admin.site.register(Concours)
+admin.site.register(Evaluation)
 admin.site.register(Category)
+admin.site.register(SubCategory)
 admin.site.register(Solution)
 admin.site.register(Level)
 admin.site.register(Country)

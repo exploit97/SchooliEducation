@@ -104,7 +104,7 @@ def create_subject(request):
     context = {
         'form':form
     }
-    return render(request, 'courses/create_subject.html', context)
+    return render(request, 'courses/create_legend.html', context)
 
 
 @login_required

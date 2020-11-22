@@ -78,7 +78,7 @@
     </li>
     
     <li class="nav-item">
-       <a class="nav-link" href="{% url 'forum:question-topic' %}"><button class="btn btn-danger">Nouveau sujet</button></a> 
+       <a class="nav-link" href="{% url 'forum:question-topic' %}"><button class="btn btn-danger">Nouveaux sujets</button></a> 
     </li>
     
    
@@ -90,7 +90,7 @@
 <!-- Forums  -->
 <div id="list" style="background-color: beige;">
 
-    <table border="0" cellpadding="4" width="100%">
+    <table border="5" cellpadding="4" width="100%">
         <tr>
             <td><strong>DES FORUMS</strong> </td>
             <td><strong>POSTS</strong></td>
@@ -102,13 +102,13 @@
         {% for forum in forums %}
             <tr>
                 <td {% if forloop.last %} class="last" {% endif %}>
-                    <div class="title"> <a href="{% url 'forum:forum-detail' forum.pk %}">{{ forum.title }}</a></div>
+                    <h2 class="title"> <a href="{% url 'forum:forum-detail' forum.pk %}">{{ forum.title }}</a></h2>
                 </td>
                 <td {% if forloop.last %}class="last"{% endif %}>{{ forum.num_posts }}</td>
                 <td {% if forloop.last %}class="last"{% endif %}>
                     {{ forum.last_post.short|linebreaksbr }}</td>
                 <td {% if forloop.last %}class="last"{% endif %}>
-                    <a class="button" href="{% url 'forum:forum-detail' forum.pk %}">VIEW</a>
+                    <a class="button" href="{% url 'forum:forum-detail' forum.pk %}">VOIR</a>
                 </td>
             </tr>
         {% endfor %}

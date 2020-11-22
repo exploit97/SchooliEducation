@@ -4,20 +4,88 @@
 {% block content %}
 <!-- Posts  -->
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+<nav class="navbar navbar-expand navbar-light bg-light">
+   
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        {% if request.user.is_authenticated %}
+        {% if request.user.profile.is_teacher == True %}
+        <li class="nav-item">
+         
+            <a class="nav-link disabled" href="{% url 'forum:new-forum' %}">Nouveau forum</a>
+          </li>
+          {% endif %}
+          {% endif %}
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Nouveau sujet </a>
+        </li>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Fils d'actualité
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">les plus suivis</a>
+              <a class="dropdown-item" href="#">les plus aimés</a>
+              <a class="dropdown-item" href="#">les plus chauds</a>
+            </div>
+          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Postes
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">les plus vues</a>
+            <a class="dropdown-item" href="#">les plus aimés</a>
+            <a class="dropdown-item" href="#">les plus chauds</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-<div style="background-color: beige;">
-<div class="ttitle">{{ topic.title }}</div>
-<div id="list">
-
-    {% for post in posts.object_list %}
-        <div class="post">
-            <span class="title">{{ post.title }}</span><br />
-            by {{ post.creator }} | <span class="date">{{ post.created }}</span> <br /><br />
-            {{ post.body }} <br />
-        </div>
-    {% endfor %}
 </div>
+</div>
+<div style="background-color: beige;" >
+ 
+    <h1 >{{ topic.title }}</h1>
+<div class="card mb-3" style="margin: 2%;">
+    <div class="row no-gutters" >
+      <div class="col-md-2" >
+        <img src="{{ topic.creator.profile.profile_pic.url }}" class="card-img" style="width: 50%; height: 50%;">
+      </div>
+  <div class="col-md-10">
+    <div class="card-body">
+      <h5 class="card-title" id="admin">{{ topic.title }}<br><small class="text-muted"> by {{ topic.creator }} | {{ topic.created }}</small></h5>
+      <p class="card-text">{{topic.description }}</p>
+      <p class="text-right"><a class="btn btn-primary" href="{% url 'forum:reply' topic.pk %}">Répondre</a></p>
+  </div>
+  
+  </div>
+  </div>
+  </div>
 
+ {% for post in posts.object_list %}
+
+<div class="card mb-3" style="margin: 2%;">
+        <div class="row no-gutters" >
+          <div class="col-md-2">
+            <img src="{{ post.creator.profile.profile_pic.url }}" class="card-img" style="width: 50%; height: 50%;">
+          </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5><small class="text-muted"> by {{ post.creator }} | {{ post.created }}</small></h5>
+          <p class="card-text">{{post.body }}</p>
+   
+      </div>
+      
+      </div>
+      </div>
+      </div>
+      {% endfor %}
 <!-- Next/Prev page links  -->
 {% if posts.object_list and posts.paginator.num_pages > 1 %}
 <div class="pagination">
@@ -36,6 +104,8 @@
     </span>
 </div>
 {% endif %}
-<a class="button" href="{% url 'forum:reply' topic.pk %}">Reply</a>
+<a class="btn btn-primary" href="{% url 'forum:reply' topic.pk %}">Répondre</a>
 </div>
+</div>
+
 {% endblock %}

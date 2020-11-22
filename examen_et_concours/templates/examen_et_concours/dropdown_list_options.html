@@ -1,0 +1,6 @@
+<option value="">--------</option>
+{% for level in levels %}
+{% if level %}
+<option value="{{ level.pk }}">{{ level.name }}</option>
+{% endif %}
+{% endfor %}

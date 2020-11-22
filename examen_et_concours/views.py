@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Concours, Category, Solution, Subject,Level,Matter,Country,Year,Etablissement
+from .models import Evaluation, Category, Solution, Subject,Level,Matter,Country,Year,Etablissement
 from django.views.generic import ListView, UpdateView, DetailView, CreateView, TemplateView
 from django.urls import reverse_lazy,reverse
-from .forms import addConcoursForm,addCountryForm,addEtablissementForm,addLevelForm,addSolutionForm,addYearForm,addMatterForm,addCategoryForm
+from .forms import addEvaluationForm,addCountryForm,addEtablissementForm,addLevelForm,addSolutionForm,addYearForm,addMatterForm,addCategoryForm
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 
 # Create your views here.
@@ -13,17 +13,18 @@ def home(request):
 
 class TousLesConcours(ListView):
     template_name='examen_et_concours/touslesconcours.html'
-    model = Concours
+    model = Evaluation
     paginate_by = 6
 
 class ConcoursDescription(DetailView):
     template_name='examen_et_concours/concours_description.html'
-    model = Concours
+    model = Evaluation
+   
  
 
 def SameConcours(request, cats):                     
     cats = get_object_or_404(Category, name = cats)
-    concours = cats.concours_set.all()
+    concours = cats.evaluation_set.all()
     context = {'concours':concours} 
     return render(request,'examen_et_concours/SameConcours.html',context)
 
@@ -32,13 +33,13 @@ def examenSearchForm(request):
     level = Level.objects.all()
     matter = Matter.objects.all()
     year = Year.objects.all()
-    examen = Concours.objects.all()
+    evaluation = Evaluation.objects.all()
     country = Country.objects.all()
     context = {'level':level,
     'matter':matter,
     'year':year,
     'country':country,
-    'examen':examen, 
+    'evaluation':evaluation, 
     }
     return render(request,'examen_et_concours/examen_search_form.html',context) 
 
@@ -46,12 +47,12 @@ def concoursSubjectForm(request,name):
     level = Level.objects.all()
     matter = Matter.objects.all()
     year = Year.objects.all()
-    examen = Concours.objects.get(name = name )
+    evaluation = Evaluation.objects.get(name = name )
     country = Country.objects.all()
     context = {'level':level,
     'matter':matter,
     'year':year,
-    'country':country,'examen':examen,
+    'country':country,'evaluation':evaluation,
     'name':name }
     return render(request,'examen_et_concours/concours_subjects_form.html',context) 
     
@@ -68,7 +69,7 @@ def ConcoursSubjectDescription(request, id):
     
 
 def searchExam(request):
-    examen = request.GET.get('examen')
+    evaluation = request.GET.get('evaluation')
     Niveau = request.GET.get('Niveau')
     matter = request.GET.get('matter')
     country = request.GET.get("country")
@@ -76,7 +77,7 @@ def searchExam(request):
     yearf = request.GET.get("yearf")  
    
   
-    sujet = Subject.objects.filter(examen=examen,level = Niveau,matter = matter,country=country
+    sujet = Subject.objects.filter(evaluation=evaluation,level = Niveau,matter = matter,country=country
     ).filter(year__gte = year).filter(
             year__lte = yearf)
         
@@ -93,43 +94,15 @@ def searchExam(request):
         'title': title
     }
     return render(request, 'examen_et_concours/sujets.html', context)
-
-def searchConcoursSujects(request):
-    examen = request.GET.get('examen')
-    Niveau = request.GET.get('Niveau')
-    matter = request.GET.get('matter')
-    country = request.GET.get("country")
-    year = request.GET.get("year")
-    yearf = request.GET.get("yearf")  
-    sujet = Subject.objects.filter(examen=examen).filter(
-        level = Niveau).filter(
-            matter = matter
-        ).filter(
-            country=country
-        ).filter(year__gte = year).filter(
-            year__lte = yearf)
-
-        
-    touslessujets = sujet
-    title='voici les sujets trouvés : '
-    
-    if not touslessujets.exists():
-        title = "Aucune reponse ne correspond"
-    context = {
-        'touslessujets': touslessujets,
-        'title': title
-    }
-    return render(request, 'examen_et_concours/sujets.html', context) 
-
     
 def searchConcours(request):
     query = request.GET.get('query')
     if not query :
-        concours = Concours.objects.all()
+        concours = Evaluation.objects.all()
         
     else:
         # title contains the query is and query is not sensitive to case.
-        concours = Concours.objects.filter(name__icontains=query)
+        concours = Evaluation.objects.filter(name__icontains=query)
     
     paginator = Paginator(concours, 6)
     page = request.GET.get('page')
@@ -157,8 +130,8 @@ class AddSubjectView(CreateView):
     success_url = reverse_lazy('examen_et_concours:touslesconcours')
      
 class addConcours(CreateView):
-    model = Concours
-    form_class=addConcoursForm
+    model = Evaluation
+    form_class=addEvaluationForm
     template_name = 'examen_et_concours/add.html'
     success_url = reverse_lazy('examen_et_concours:add_subject')
 
@@ -206,6 +179,16 @@ class addEtablissement(CreateView):
     success_url = reverse_lazy('examen_et_concours:add_subject')
     
 
+# AJAX
+def load_levels(request):
+    evaluation_id = request.GET.get('evaluation')
+    levels = Level.objects.filter(evaluation_id=evaluation_id).all()
+    return render(request, 'examen_et_concours/dropdown_list_options.html', {'levels': levels})
+
+def load_matters(request):
+    level_id = request.GET.get('level')
+    matters = Matter.objects.filter(level_id=level_id).all()
+    return render(request, 'examen_et_concours/dropdown_list_options.html', {'levels': matters})
    
 
             

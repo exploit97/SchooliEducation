@@ -1,19 +1,32 @@
 from django.forms import ModelForm
-from .models import Subject, Solution,Etablissement,Level,Year,Country,Concours,Matter,Category
+from .models import Subject, Solution,Etablissement,Level,Year,Country,Evaluation,Matter,Category
 from django import forms
 
 class Searchform(ModelForm):
     class Meta:
         model = Subject
-        fields = ['examen','year','matter','level','etablissement',]
+        fields = ['evaluation','year','matter','level','etablissement',]
         widgets = {
-        'examen': forms.Select(attrs={"class":'form-control' ,'name':'title'}),
+        'evaluation': forms.Select(attrs={"class":'form-control' ,'name':'title'}),
         'year' : forms.Select(attrs={'class':"form-control", 'name':"text", 'cols':"30" ,'rows':"10" }),
         'matter' : forms.Select(attrs={'class':"form-control", 'name':"matter", 'cols':"30" ,'rows':"5" }),
         'level' : forms.Select(attrs={'class':"form-control", 'name':"level" }),
         'etablissement' : forms.Select(attrs={'class':"form-control", 'name':"etablissement" }),
         
-        } 
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['level'].queryset = Level.objects.none()
+
+        if 'evaluation' in self.data:
+            try:
+                evaluation_id = int(self.data.get('evaluation'))
+                self.fields['level'].queryset = Level.objects.filter(evaluation_id=evaluation_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['level'].queryset = self.instance.evaluation.level_set.order_by('name') 
     
     
 class addSolutionForm(ModelForm):
@@ -56,10 +69,10 @@ class addYearForm(ModelForm):
         fields = ['year',]
        
 
-class addConcoursForm(ModelForm):
+class addEvaluationForm(ModelForm):
     class Meta:
 
-        model = Concours
+        model = Evaluation
         fields = ['name','description','image','category',]
         
 class addCategoryForm(ModelForm):

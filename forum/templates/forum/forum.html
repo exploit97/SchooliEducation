@@ -27,6 +27,15 @@
 </form>
 </div>
 
+<ul class="nav ml-auto">
+    <li class="nav-item">
+      
+        {% if forum %}
+        <h1><strong>{{forum.title }}</strong> </h1>
+        {% endif %}
+    </li>
+    </ul>
+
 
 <ul class="nav justify-content-end">
     <li class="nav-item">
@@ -41,24 +50,24 @@
 
 
 <div id="list">
-<table border="0" cellpadding="4" width="100%">
+<table border="5" cellpadding="4" width="100%">
     <tr>
-        <td><strong>Sujets</strong></td>
+        <td ><strong>Sujets</strong></td>
         <td><strong>Réponses</strong></td>
         <td><strong>Derniers posts</strong></td>
         <td></td>
     </tr>
 
-    {% for topic in topics.object_list %}
-    <tr>
+    {% for topic in topics %}
+    <tr >
         <td {% if forloop.last %}class="last"{% endif %}>
-        <div class="title"> <a href="{% url 'forum:topic-detail' topic.id %}">{{ topic.title }}</a>
-            </div></td>
+        <h2 class="title" style="color: blue;"> <a href="{% url 'forum:topic-detail' topic.id %}">{{ topic.title }}</a>
+        </h2></td>
         <td {% if forloop.last %}class="last"{% endif %}>{{ topic.num_replies }}</td>
         <td {% if forloop.last %}class="last"{% endif %}>
             {{ topic.last_post.short|linebreaksbr }}</td>
         <td {% if forloop.last %}class="last"{% endif %}>
-            <a class="button" href="{% url 'forum:topic-detail' topic.id %}">VIEW</a>
+            <a class="button" href="{% url 'forum:topic-detail' topic.id %}">VOIR</a>
         </td>
     </tr>
 

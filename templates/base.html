@@ -53,60 +53,82 @@
 		</div>
 	</div>
 	<!-- END LOADER -->	
-	
-
-		
-				
-						
-			
-			
-				
-			<!--
-				
-				{% if request.user.is_authenticated %}
-			
-				  <a class=" dropdown-toggle nav-link " href="#" role="button" id="dropdown-a" data-toggle="dropdown" >
-					  {{request.user.username}}
-				  </a>
-				
-				  <div class="dropdown-menu" aria-labelledby="dropdown-a">
-					<a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a>
-					<a class="dropdown-item" href="{% url 'account_logout' %}">Sortie</a>
-				  </div>
-		
-				{% else %}
-				
-				  <a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_login' %}">Connexion</a>
-				
-			
-				  <a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_signup' %}">Inscription</a>
-				
-				{% endif %}</div>
-		
-		-->	
-	</div>
-	
-		
-	
-
-		
 			
 	<!-- Start header -->
 	<header class="top-navbar">
 		
 			<div class="container-fluid">
-
-				<div class="row">
-					<div class="col">
-						<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand" href="">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="{%url 'blogs:home'%}">
 				<img src="{% static 'schooli/images/logo-schooli.png' %}" alt="" />
 				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-host" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+					
+				</button>
+						
+				<div class="collapse navbar-collapse" id="navbars-host">
+					<ul class="navbar-nav ml-auto">
+					
 				
-				
-				<ul class="navbar-nav ml-auto">
+					{% if request.user.profile.is_teacher == True %}
+						
+                        <li class="nav-item dropdown">
+					
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              cours et TD
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                              <a class="dropdown-item" href="{% url 'courses:create_classe' %}">Créer une classe</a>
+                              <a class="dropdown-item" href="{% url 'courses:create_subject' %}">Créer un sujet</a>
+                              <a class="dropdown-item" href="{% url 'courses:create_teaching' %}">Créer une leçon</a>
+                            </div>
+                          
+                          </li>                
+                          <li class="nav-item dropdown">
+					
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Concours&exam
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                              <a class="dropdown-item" href="{% url 'examen_et_concours:add_subject' %}">Ajouter sujets</a>
+                              <a class="dropdown-item" href="{% url 'examen_et_concours:add_examen' %}">concours&examen </a>
+                            
+                            </div>
+                          
+                          </li> 
+
+
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'blogs:post_list' %} ">Blog</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" href="{% url 'forum:forum-index' %} ">Forum</a>
+						  </li>
+						  <li class="nav-item"><a class="nav-link" href="{% url 'store:index' %}">Librairie</a></li>
+						{% else %}
+		
+					<li class="nav-item">
+							<a class="nav-link" href="{% url 'examen_et_concours:touslesconcours' %}">Concours</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'examen_et_concours:Searchform' %}">Examens</a></li>
+							
+					
+						<li class="nav-item" >
+							<a class="nav-link" href="{% url 'courses:home' %}">Cours et TD</a>
+							
+						</li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'store:index' %}">Librairie</a></li> 	
+						<li class="nav-item"><a class="nav-link" href="{% url 'forum:forum-index' %} ">Forum</a></li>
+						
+						{% endif %}
+						
+					  </ul>
+
+					  <ul class="navbar-nav ml-auto">
+						{% if request.user.is_authenticated %}
 				<li class="nav-item dropdown">
-					{% if request.user.is_authenticated %}
+					
 				  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					{{request.user.username}}
 				  </a>
@@ -117,22 +139,9 @@
 				
 				</li>
 				{% else %}
-			<!--	<li class="nav-item ">
-					<a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_login' %}">Connexion</a>
-				  </li>
-				 
-				
-				
-				
-				  <li class="nav-item ">
-				  <a class="active nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_signup' %}">Inscription</a>
-				  </li>
-				-->
-
-				
-                    
+			
                         <li class="nav-item  dropdown">
-                        <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" id="dropdown-a"><span class="fa fa-user margin-r-5"></span> Mon compte </a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button"  data-toggle="dropdown"   aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span> Mon compte </a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-a">
                                                            
                                     <a class="dropdown-item" href="{% url 'account_login' %}" >
@@ -145,88 +154,23 @@
                                     </a>
                                   
                                 
-								</div>
+                        </div>
                                                           
                     </li>
 
 				  {% endif %}
 			  </ul>
-					
-			</li>
-			
-			  
-			</nav>
-			</div>
-				</div>
-				
-			<div class="row">
-				<div class="col">
-					<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-host" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbars-host">
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active"><a class="nav-link" href="{% url 'blogs:home' %}">Acceuil</a></li>
-				
-					{% if request.user.profile.is_teacher == True %}
-						<li class="nav-item mx-0 mx-lg-1">
-						  <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'courses:create_classe' %}">Créer une classe</a>
-						</li>
-						<li class="nav-item mx-0 mx-lg-1">
-						  <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'courses:create_subject' %}">Créer subject</a>
-						</li>
-						<li class="nav-item mx-0 mx-lg-1">
-						  <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'courses:create_teaching' %}">Créer une leçon</a>
-						</li>
-						<li class="nav-item mx-0 mx-lg-1">
-							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'blogs:post_list' %} ">Blog</a>
-						  </li>
-						{% else %}
-						
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Espace Prepas </a>
-							<div class="dropdown-menu" aria-labelledby="dropdown-a">
-								<a class="dropdown-item" href="{% url 'examen_et_concours:touslesconcours' %}">Concours </a>
-								<a class="dropdown-item" href="{% url 'examen_et_concours:Searchform' %}"> Examens</a>
-								<a class="dropdown-item" href="{% url 'courses:home' %}">Cours et TD</a>
-							</div>
-						</li>
-					<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Orienation</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown-a">
-								<a class="dropdown-item" href="blog.html"> Apres le Baccaleauréat</a>
-								<a class="dropdown-item" href="blog-single.html">Après la licence </a>
-							</div>
-						</li>	
-						<li class="nav-item"><a class="nav-link" href="blog/categorie/concours">Bourses d'études</a></li>
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'forum:forum-index' %}">Forum</a>
-							
-						</li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'store:index' %}">Librarie</a></li> 	
-						
-						{% endif %}
-						
-					  </ul>
-				</div>
+	
 			</nav>
 				</div>	
-                   
-				</div>
-			</div>
+               
 		
 	
 	</header>
 
 	<!-- End header -->
-		
 
-	
-		
+
 	
     {% block content %}
     
@@ -260,13 +204,13 @@
 				<div class="col-lg-4 col-md-4 col-xs-12">
                     <div class="widget clearfix">
                         <div class="widget-title">
-                            <h3>Information Link</h3>
+                            <h3>Information</h3>
                         </div>
                         <ul class="footer-links">
                             <li><a href="{% url 'examen_et_concours:home' %}">Acceuil</a></li>
                             <li><a href="{% url 'blogs:post_list'%}">Blog</a></li>
-                            <li><a href="#">Nos tarifs</a></li>
-							<li><a href="{% url 'courses:about' %}">About</a></li>
+                            <li><a href="{% url 'users:demande'%}">Devenir Enseignant</a></li>
+					
 							<li><a href="{% url 'courses:contact' %}">Contact</a></li>
                         </ul><!-- end links -->
                     </div><!-- end clearfix -->

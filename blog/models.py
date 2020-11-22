@@ -27,14 +27,14 @@ class Post(models.Model):
     snippet = models.CharField(max_length=255, default='cliquez les lignes ci-dessus pour lire l\'article')
 
     
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+    #def save(self, *args, **kwargs):
+       # super().save(*args, **kwargs)
 
-        img = Image.open(self.post_image.path)
+        #img = Image.open(self.post_image.path)
         
-        output_size = (200,200)
-        img.thumbnail(output_size)
-        img.save(self.post_image.path)
+        #output_size = (200,200)
+        #img.thumbnail(output_size)
+        #img.save(self.post_image.path)
 
     def get_absolute_url(self):
         return reverse("blogs:post_detail", kwargs={"pk": self.pk})

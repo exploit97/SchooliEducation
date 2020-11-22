@@ -52,7 +52,7 @@ def Profile(request):
     }
     return render(request,'profile/profile.html',context)
 
-
+@login_required
 def Demandes(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -82,4 +82,5 @@ def Demandes(request):
         messages.info(request, f'La demande a été envoyée avec succès, vous serez averti par email.')
         return redirect('courses:home')
 
-
+    else:
+        return render(request,'profile/teacher_sign_up.html')

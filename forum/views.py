@@ -5,8 +5,9 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from forum.models import Forum, Topic
+from users.models import Profile
 from forum.models import Poste as Post
-from forum.forms import TopicForm, PostForm,ForumForm,TopicForm2
+from forum.forms import TopicForm, PostForm,ForumForm,TopicForm2,ReplyForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -43,7 +44,8 @@ def forum(request, forum_id):
    
     context ={
        'topics':topics,
-       'forum':forum
+       'forum':forum,
+      
        }
 
     return render(request,"forum/forum.html", context)
@@ -52,6 +54,8 @@ def topic(request, topic_id):
     """Listing of posts in a topic."""
     posts = Post.objects.filter(topic=topic_id).order_by("created")
     topic = Topic.objects.get(pk=topic_id)
+    
+    
     paginator = Paginator(posts, 9)
     page = request.GET.get('page')
 
@@ -73,7 +77,7 @@ def topic(request, topic_id):
 
 @login_required
 def post_reply(request, topic_id):
-    form = PostForm()
+    form = ReplyForm()
     topic = Topic.objects.get(pk=topic_id)
     
     if request.method == 'POST':
@@ -83,7 +87,7 @@ def post_reply(request, topic_id):
 
             post = Post()
             post.topic = topic
-            post.title = form.cleaned_data['title']
+            #post.title = form.cleaned_data['title']
             post.body = form.cleaned_data['body']
             post.creator = request.user
             post.user_ip = request.META['REMOTE_ADDR']

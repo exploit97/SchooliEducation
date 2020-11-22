@@ -9,16 +9,17 @@
                
         <hr class="invis"> 
         <div class="row"> 
-         
-           
-       <h2>Description du concours {{ concours.name }}</h2>
-        <p> {{concours.description }}</p>
+        <div class="col">
+       <h2>Description du concours {{ evaluation.name }}</h2>
+       
+        <p> {{evaluation.description }}</p>
         <a href="{% url 'examen_et_concours:touslesconcours'%}"> <button type="button" class="btn btn-primary">Revenir </button></a>
-        <a href="{% url 'examen_et_concours:concours_subjects_form' concours.name %}"><button type="button" class="btn btn-primary">Voir les sujets</button></a>
+        <a href="{% url 'examen_et_concours:concours_subjects_form' evaluation.name %}"><button type="button" class="btn btn-primary">Voir les sujets</button></a>
+    </div>
     </div>
     </div>
 </div>
-</div>
+
 <!-- end col -->
 
             

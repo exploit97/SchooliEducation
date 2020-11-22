@@ -16,8 +16,8 @@ from forum.models import Forum
     
 def home(request):
     categories = Categorie.objects.all()[:6]
-    forums = Forum.objects.all()[:6]
-    posts = Post.objects.all()[:3]
+    forums = Forum.objects.order_by('-created')[:6]
+    posts = Post.objects.order_by('-created_date')[:3]
     context = {'categories':categories,
                 'forums':forums,
                 'posts':posts }
